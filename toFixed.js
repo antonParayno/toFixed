@@ -21,7 +21,9 @@ function toFixed (value, precision) {
   if (!dotIndex) {
     dotIndex = 2;
   }
-  if(dotIndex > splittedValue[1].length) {
+  // this if block will correctly pad the value if given precision is higher that decimal numbers.
+  // i used and to short circuit the condition if no decimal is given.
+  if(splittedValue[1] && dotIndex > splittedValue[1].length) {
     return value.toFixed(dotIndex);
   }
   // this code deals with the second element of the resulting array for the splitted string. 

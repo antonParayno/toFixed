@@ -14,12 +14,15 @@ function toFixed (value, precision) {
   var dotToRight = '';
   var correctedValue = '';
   // this block of code checks if the given value is over 1e+21, if value is over/equal to 1e+21 it will just return the stringified value.
-  if (value > 1e+21) {
+  if (value >= 1e+21) {
     return stringifiedValue;
   }
   // this block of code is the one responsible for checking if precision is given, if not assigns it to 2.
   if (!dotIndex) {
     dotIndex = 2;
+  }
+  if(dotIndex > splittedValue[1].length) {
+    return value.toFixed(dotIndex);
   }
   // this code deals with the second element of the resulting array for the splitted string. 
   if (splittedValue[1]) {
@@ -66,6 +69,10 @@ tests ( {
   'It should return the value in exponential notation if it is greater than 1e+21.': function () {
     var roundedValue = toFixed(1000000000000000000000);
     eq(roundedValue,1e+21);
+  },
+  'It should pad the value if the given precision is higher than the number of decimals.': function () {
+    var value = toFixed(1.005, 5);
+    eq(value, '1.00500');
   }
 } );
 
